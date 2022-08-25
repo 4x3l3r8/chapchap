@@ -26,9 +26,31 @@
 .shareInput {
   border: none;
   width: 100%;
+  height: 50px;
+  padding: 10px;
+  resize: none;
 }
 .shareInput:focus {
-  outline: none;
+  outline: 1px inset blue;
+  border-radius: 15px;
+}
+textarea::-webkit-input-placeholder {
+  line-height: 50px;
+  align-items: center;
+}
+textarea:-moz-placeholder {
+  /* Firefox 18- */
+  line-height: 50px;
+  align-items: center;
+}
+textarea::-moz-placeholder {
+  /* Firefox 19+ */
+  line-height: 50px;
+  align-items: center;
+}
+textarea:-ms-input-placeholder {
+  line-height: 50px;
+  align-items: center;
 }
 
 .shareHr {

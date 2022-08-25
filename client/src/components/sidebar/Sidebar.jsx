@@ -51,9 +51,6 @@ const Sidebar = () => {
           {Users.map((u) => (
             <FriendsRow key={u.id} user={u} />
           ))}
-          {Users.map((u) => (
-            <FriendsRow key={u.id} user={u} />
-          ))}
         </ul>
       </div>
     </div>

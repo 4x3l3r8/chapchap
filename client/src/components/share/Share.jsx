@@ -7,7 +7,7 @@ const Share = () => {
       <div className="shareWrapper">
         <div className="shareTop">
           <img src="/assets/person/1.jpeg" className="shareProfileImg" alt="" />
-          <input placeholder="What's on your mind?" className="shareInput" />
+          <textarea placeholder="What's on your mind?" className="shareInput" />
         </div>
         <hr className="shareHr" />
         <div className="shareBottom">
