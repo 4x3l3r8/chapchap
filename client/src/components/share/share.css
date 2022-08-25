@@ -26,30 +26,36 @@
 .shareInput {
   border: none;
   width: 100%;
-  height: 50px;
+  height: 25px;
   padding: 10px;
   resize: none;
+  line-height: 25px;
+  font-size: 15px;
 }
 .shareInput:focus {
   outline: 1px inset blue;
   border-radius: 15px;
 }
 textarea::-webkit-input-placeholder {
-  line-height: 50px;
+  line-height: 25px;
+  font-size: 15px;
   align-items: center;
 }
 textarea:-moz-placeholder {
   /* Firefox 18- */
-  line-height: 50px;
+  line-height: 25px;
+  font-size: 15px;
   align-items: center;
 }
 textarea::-moz-placeholder {
   /* Firefox 19+ */
-  line-height: 50px;
+  line-height: 25px;
+  font-size: 15px;
   align-items: center;
 }
 textarea:-ms-input-placeholder {
-  line-height: 50px;
+  line-height: 25px;
+  font-size: 15px;
   align-items: center;
 }
 
