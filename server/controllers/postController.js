@@ -84,8 +84,36 @@ exports.getPost = async (req, res, next) => {
     }
 }
 
-// get timeline posts
+/**
+ * Get visited User timeline posts
+ * @param {Object} req Api request
+ * @param {Object} res Api response
+ * @param {Object} next Error response
+ */
 exports.getTimelinePosts = async (req, res, next) => {
+    try {
+        const currentUser = await User.findById(req.params.id);
+        const userPosts = await Post.find({ userId: currentUser._id });
+        const friendPosts = await Promise.all(
+            currentUser.following.map(friendId => {
+                return Post.find({ userId: friendId });
+            })
+        );
+        res.status(200).json({ Status: "ok", data: userPosts.concat(...friendPosts) })
+    } catch (e) {
+        console.log(e)
+        res.status(500).json(e);
+        next(e);
+    }
+}
+
+/**
+ * Get logged in User timeline posts
+ * @param {Object} req Api request
+ * @param {Object} res Api response
+ * @param {Object} next Error response
+ */
+exports.getMyTimelinePosts = async (req, res, next) => {
     try {
         const currentUser = await User.findById(req.body.userId);
         const userPosts = await Post.find({ userId: currentUser._id });
@@ -94,7 +122,7 @@ exports.getTimelinePosts = async (req, res, next) => {
                 return Post.find({ userId: friendId });
             })
         );
-        res.json(userPosts.concat(...friendPosts))
+        res.status(200).json(userPosts.concat(...friendPosts))
     } catch (e) {
         console.log(e)
         res.status(500).json(e);

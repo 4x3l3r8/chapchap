@@ -10,7 +10,9 @@ router.delete("/delete/:id", postController.deletePost);
 
 // SOCIALS
 router.put("/:id/like", postController.likePost);
-router.get("/timelineposts/all", postController.getTimelinePosts)
+router.get("/timelineposts/:id", postController.getTimelinePosts);
+router.post("/timelineposts/me", postController.getMyTimelinePosts);
+
 
 
 module.exports = router;
