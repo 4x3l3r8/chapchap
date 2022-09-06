@@ -35,7 +35,11 @@
 }
 
 .postDate {
-  font-size: 12px;
+  font-size: 10px;
+  font-weight: 300;
+  color: rgb(170, 167, 167);
+  align-self: flex-end;
+  margin-bottom: 8px;
 }
 
 .postCenter {
