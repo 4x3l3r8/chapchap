@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const helpers = require("../utils/helpers")
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -66,7 +67,7 @@ const UserSchema = new mongoose.Schema({
     },
     relationship: {
         type: Number,
-        enum: [1, 2, 3]
+        enum: [1, 2, 3],
     }
 },
     { timestamps: true }
@@ -76,6 +77,13 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre('save', async function (next) {
     // hash password
     this.password = await bcrypt.hash(this.password, 12);
+
+    // sanitize email
+    this.email = helpers.sanitize(this.email);
+
+    //sanitize username
+    this.username = this.username.trim();
+
     this.passwordConfirm = undefined;
     next();
 });
