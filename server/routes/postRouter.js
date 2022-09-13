@@ -6,6 +6,7 @@ router.get("/:id", postController.getPost)
 router.post("/create", postController.createPost);
 router.put("/update/:id", postController.updatePost);
 router.delete("/delete/:id", postController.deletePost);
+router.get("/profile/:username", postController.getProfilePosts);
 
 
 // SOCIALS
