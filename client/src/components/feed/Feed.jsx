@@ -4,19 +4,21 @@ import Share from "../share/Share";
 import axios from "axios";
 import "./feed.css";
 
-const Feed = () => {
+const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     try {
       const fetchPosts = async () => {
         let baseUrl = process.env.REACT_APP_API_URL;
-        return axios.get(baseUrl + "posts/timelineposts/63057db0d66927c3bfb70992");
+        return username
+          ? axios.get(baseUrl + `posts/profile/${username}`)
+          : axios.get(baseUrl + "posts/timelineposts/63057db0d66927c3bfb70992");
       };
 
       fetchPosts().then((res) => setPosts(res.data.data));
     } catch (e) {}
-  }, []);
+  }, [username  ]);
 
   return (
     <div className="feed">

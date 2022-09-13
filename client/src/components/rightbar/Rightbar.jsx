@@ -6,7 +6,7 @@ import { RiUserHeartFill } from "react-icons/ri";
 import { BsGenderAmbiguous } from "react-icons/bs";
 import "./rightbar.css";
 
-const Rightbar = ({ profile }) => {
+const Rightbar = ({ user }) => {
   const onlineUsers = Users.filter((u) => u.username.includes("e"));
 
   const HomeRightbar = () => {
@@ -42,25 +42,25 @@ const Rightbar = ({ profile }) => {
             <span className="rightbarInfoKey">
               <ImLocation /> City:
             </span>
-            <span className="rightbarInfoValue">Lagos, Nigeria</span>
+            <span className="rightbarInfoValue">{user.city}</span>
           </div>
           <div className="rightbarInfoItem" id="profile">
             <span className="rightbarInfoKey">
               <ImHome2 /> From:
             </span>
-            <span className="rightbarInfoValue">Ogun, Nigeria</span>
+            <span className="rightbarInfoValue">{user.from}</span>
           </div>
           <div className="rightbarInfoItem" id="profile">
             <span className="rightbarInfoKey">
               <RiUserHeartFill /> Relationship Status:
             </span>
-            <span className="rightbarInfoValue">Lagos, Nigeria</span>
+            <span className="rightbarInfoValue">{user.relationship === 1 ? "Single" : user.relationship === 2 ? "Married" : ""}</span>
           </div>
           <div className="rightbarInfoItem" id="profile">
             <span className="rightbarInfoKey">
               <BsGenderAmbiguous /> Gender:
             </span>
-            <span className="rightbarInfoValue">Lagos, Nigeria</span>
+            <span className="rightbarInfoValue">{user.gender}</span>
           </div>
         </div>
         <h4 className="rightbarTitle" id="profile">
@@ -74,9 +74,10 @@ const Rightbar = ({ profile }) => {
       </>
     );
   };
+
   return (
     <div className="rightbar">
-      <div className="rightbarWrapper">{profile ? <ProfileRightbar /> : <HomeRightbar />}</div>
+      <div className="rightbarWrapper">{user ? <ProfileRightbar /> : <HomeRightbar />}</div>
     </div>
   );
 };

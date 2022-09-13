@@ -1,6 +1,7 @@
 import "./post.css";
 import { MdMoreVert } from "react-icons/md";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 
@@ -18,7 +19,7 @@ const Post = ({ post }) => {
     try {
       const fetchUsers = async () => {
         let baseUrl = process.env.REACT_APP_API_URL;
-        return axios.get(baseUrl + `users/${post.userId}`);
+        return axios.get(baseUrl + `users/?userId=${post.userId}`);
       };
 
       fetchUsers().then((res) => setUser(res.data.data));
@@ -30,11 +31,13 @@ const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <img
-              src={user.profilePicture !== "" ? user.profilePicture : `https://via.placeholder.com/150/000000/ffffff?Text=${user.username}`}
-              className="postProfileImg"
-              alt=""
-            />
+            <Link to={`profile/${user.username}`}>
+              <img
+                src={user.profilePicture !== "" ? user.profilePicture : `https://via.placeholder.com/25/4e3fd3/ffffff?text=${user.username}`}
+                className="postProfileImg"
+                alt=""
+              />
+            </Link>
             <span className="postUsername">{user.username}</span>
             <span className="postDate">{moment(post.createdAt).fromNow()}</span>
           </div>
