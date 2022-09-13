@@ -32,8 +32,8 @@
   font-size: 24px;
 }
 
-.loginBox {
-  height: 400px;
+.registerBox {
+  height: 450px;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -54,6 +54,17 @@
   outline: none;
 }
 
+.loginError {
+  height: 25px;
+  border-radius: 10px;
+  border: 2px solid rgb(181, 17, 17);
+  background-color: #fc8787;
+  font-size: 13.5px;
+  color: #fff;
+  padding: 3px;
+  text-align: center;
+}
+
 .loginButton {
   height: 50px;
   border-radius: 10px;
@@ -63,6 +74,19 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.loading {
+  opacity: 0.7564;
+  background-color: #377fdde4;
+}
+
+.loginButton:focus {
+  outline: none;
+}
+
+.loginButton:disabled {
+  cursor: not-allowed;
 }
 
 .loginForgot {

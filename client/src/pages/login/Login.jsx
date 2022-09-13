@@ -1,6 +1,35 @@
+import { useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { LoginCall } from "../../apiCalls";
+import Spinner from "../../components/spinner";
+import { AuthContext } from "../../context/AuthContext";
 import "./login.css";
 
 const Login = () => {
+  const email = useRef();
+  const password = useRef();
+
+  const navigate = useNavigate();
+
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    LoginCall({ email: email.current.value, password: password.current.value }, dispatch);
+    if (user) {
+      email.current.value = "";
+      password.current.value = "";
+    }
+  };
+
+  useEffect(() => {
+    email.current.focus();
+    return () => {
+      dispatch({ type: "RESTING_STATE" });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -9,13 +38,20 @@ const Login = () => {
           <span className="loginDesc">Connect with friends and the world around you on ChapChap.</span>
         </div>
         <div className="loginRight">
-          <div className="loginBox">
-            <input placeholder="Email" className="loginInput" />
-            <input type="password" placeholder="Password" className="loginInput" />
-            <button className="loginButton">Log In</button>
-            <a href="/" className="loginForgot">Forgot Password</a>
-            <button className="loginRegisterButton">Create a new Account</button>
-          </div>
+          <form onSubmit={(e) => handleSubmit(e)} className="loginBox">
+            {error && <div className="loginError">{error.Message}</div>}
+            <input placeholder="Email" type={"email"} className="loginInput" required ref={email} />
+            <input type="password" placeholder="Password" className="loginInput" required minLength={8} ref={password} />
+            <button className={`loginButton ${isFetching ? "loading" : ""}`} type={"submit"} disabled={isFetching}>
+              {isFetching ? <Spinner /> : "Log In"}
+            </button>
+            <a href="/" className="loginForgot">
+              Forgot Password
+            </a>
+            <button disabled={isFetching} onClick={() => navigate("/register")} className="loginRegisterButton" type={"button"}>
+              Create a new Account
+            </button>
+          </form>
         </div>
       </div>
     </div>

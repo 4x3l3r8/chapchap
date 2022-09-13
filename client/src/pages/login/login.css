@@ -42,10 +42,21 @@
   justify-content: space-between;
 }
 
+.loginError {
+  height: 25px;
+  border-radius: 10px;
+  border: 2px solid rgb(181, 17, 17);
+  background-color: #fc8787;
+  font-size: 18px;
+  color: #fff;
+  padding: 2px;
+  text-align: center;
+}
+
 .loginInput {
   height: 50px;
   border-radius: 10px;
-  border: 1px solig gray;
+  border: 1px solid gray;
   font-size: 18px;
   padding-left: 20px;
 }
@@ -63,6 +74,19 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.loading {
+  opacity: 0.7564;
+  background-color: #377fdde4;
+}
+
+.loginButton:focus {
+  outline: none;
+}
+
+.loginButton:disabled {
+  cursor: not-allowed;
 }
 
 .loginForgot {
