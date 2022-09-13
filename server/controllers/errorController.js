@@ -3,7 +3,7 @@ const handleDuplicateKeyError = (err, res) => {
     const field = Object.keys(err.keyValue);
     const code = 409;
     const error = `An account with that ${field} already exists.`;
-    res.status(code).send({ messages: error, fields: field });
+  return res.status(code).send({ messages: error, fields: field });
 }
 
 //handle field formatting, empty fields, and mismatched passwords 
@@ -14,9 +14,9 @@ const handleValidationError = (err, res) => {
 
     if (errors.length > 1) {
         const formattedErrors = errors.join(' ');
-        res.status(code).send({ messages: formattedErrors, fields: fields });
+      return res.status(code).send({ messages: formattedErrors, fields: fields });
     } else {
-        res.status(code).send({ messages: errors, fields: fields })
+      return res.status(code).send({ messages: errors, fields: fields })
     }
 }
 
@@ -26,7 +26,8 @@ module.exports = (err, req, res, next) => {
         console.log('congrats you hit the error middleware');
         if (err.name === 'ValidationError') return err = handleValidationError(err, res);
         if (err.code && err.code == 11000) return err = handleDuplicateKeyError(err, res);
+      return res.status(500).json({ message: 'An unknown error occured.' });
     } catch (err) {
-        res.status(500).send('An unknown error occured.');
+      return res.status(500).send('An unknown error occured.');
     }
 }
