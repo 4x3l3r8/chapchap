@@ -4,16 +4,34 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
-  const [user, setUser] = useState({});
+  const [owner, setOwner] = useState({});
 
-  const likeHandler = () => {
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
+  const { user } = useContext(AuthContext);
+
+  const likeHandler = async () => {
+    try {
+      let baseUrl = process.env.REACT_APP_API_URL;
+      let likePost = await axios.put(baseUrl + `posts/${post._id}/like`, { userId: user._id });
+      if (likePost.data.Status === "ok") {
+        setLike(isLiked ? like - 1 : like + 1);
+        setIsLiked(!isLiked);
+      }
+      console.log(likePost);
+    } catch (error) {
+      alert("An error occurred!");
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(user._id));
+  }, [user._id, post.likes]);
 
   useEffect(() => {
     try {
@@ -22,7 +40,7 @@ const Post = ({ post }) => {
         return axios.get(baseUrl + `users/?userId=${post.userId}`);
       };
 
-      fetchUsers().then((res) => setUser(res.data.data));
+      fetchUsers().then((res) => setOwner(res.data.data));
     } catch (e) {}
   }, [post.userId]);
 
@@ -31,14 +49,14 @@ const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`profile/${user.username}`}>
+            <Link to={`profile/${owner.username}`}>
               <img
-                src={user.profilePicture !== "" ? user.profilePicture : `https://via.placeholder.com/25/4e3fd3/ffffff?text=${user.username}`}
+                src={owner.profilePicture !== "" ? owner.profilePicture : `https://via.placeholder.com/25/4e3fd3/ffffff?text=${owner.username}`}
                 className="postProfileImg"
                 alt=""
               />
             </Link>
-            <span className="postUsername">{user.username}</span>
+            <span className="postUsername">{owner.username}</span>
             <span className="postDate">{moment(post.createdAt).fromNow()}</span>
           </div>
           <div className="postTopRight">

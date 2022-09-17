@@ -15,13 +15,13 @@ const Register = () => {
 
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let res = RegisterCall(
+    await RegisterCall(
       { username: username.current.value, email: email.current.value, password: pass1.current.value, passwordConfirm: pass2.current.value },
       dispatch
     );
-    if (res) {
+    if (user) {
       email.current.value = "";
       username.current.value = "";
       pass1.current.value = "";

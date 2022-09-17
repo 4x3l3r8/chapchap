@@ -13,14 +13,20 @@ const Login = () => {
 
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    LoginCall({ email: email.current.value, password: password.current.value }, dispatch);
+    await LoginCall({ email: email.current.value, password: password.current.value }, dispatch);
+  };
+
+
+  useEffect(() => {
     if (user) {
       email.current.value = "";
       password.current.value = "";
+      navigate("/");
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   useEffect(() => {
     email.current.focus();
@@ -39,7 +45,7 @@ const Login = () => {
         </div>
         <div className="loginRight">
           <form onSubmit={(e) => handleSubmit(e)} className="loginBox">
-            {error && <div className="loginError">{error.Message}</div>}
+            {error && <div className="loginError">{error.Message || error}</div>}
             <input placeholder="Email" type={"email"} className="loginInput" required ref={email} />
             <input type="password" placeholder="Password" className="loginInput" required minLength={8} ref={password} />
             <button className={`loginButton ${isFetching ? "loading" : ""}`} type={"submit"} disabled={isFetching}>

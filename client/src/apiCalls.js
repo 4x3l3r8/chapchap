@@ -9,9 +9,10 @@ export const LoginCall = async (userCredential, dispatch) => {
         return true
     } catch (e) {
         if (e.name === "AxiosError") {
-            dispatch({ type: "LOGIN_FAILURE", payload: e.response.data })
+            dispatch({ type: "LOGIN_FAILURE", payload: e.response.data.messages || e.response.data })
+            console.log(e)
         } else {
-            dispatch({ type: "LOGIN_FAILURE", payload: e })
+            dispatch({ type: "LOGIN_FAILURE", payload: e.response.data.messages || e })
         }
         return false
     }
