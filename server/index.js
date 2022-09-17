@@ -9,11 +9,13 @@ const connectDB = require("./config/db");
 const userRoute = require("./routes/usersRouter");
 const authRoute = require("./routes/authRouter");
 const postRoute = require("./routes/postRouter");
+const uploadRoute = require("./routes/uploadRouter");
 const errorController = require("./controllers/errorController")
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
+
 
 connectDB()
 
@@ -30,6 +32,7 @@ app.use(morgan("common"));
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/upload", uploadRoute);
 
 app.use(errorController);
 
