@@ -13,13 +13,25 @@ const Share = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const newPost = {
-      userId: user._id,
-      body: desc.current.value,
-    };
+    const formData = new FormData();
+
+    formData.append("userId", user._id);
+    formData.append("body", desc.current.value);
+
+    if (file) {
+      const filename = Date.now() + file.name;
+      formData.append("file", file, filename);
+      // newPost.pendingFilename = filename;
+      // newPost.file = file;
+    }
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
+    // console.log("header", formData.getHeaders());
     try {
       let baseUrl = process.env.REACT_APP_API_URL;
-      await axios.post(baseUrl + "/posts/create", newPost);
+      await axios.post(baseUrl + "posts/create", formData);
+      window.location.reload();
     } catch (error) {
       alert("An Error Occurred");
       console.log(e);
