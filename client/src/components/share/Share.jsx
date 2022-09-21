@@ -1,9 +1,8 @@
-import { useContext, useRef } from "react";
-import { MdPermMedia, MdLabel, MdRoom, MdEmojiEmotions } from "react-icons/md";
-import "./share.css";
-import { AuthContext } from "../../context/AuthContext";
-import { useState } from "react";
 import axios from "axios";
+import { useContext, useRef, useState } from "react";
+import { MdCancel, MdEmojiEmotions, MdLabel, MdPermMedia, MdRoom } from "react-icons/md";
+import { AuthContext } from "../../context/AuthContext";
+import "./share.css";
 
 const Share = () => {
   const { user } = useContext(AuthContext);
@@ -50,6 +49,12 @@ const Share = () => {
           <textarea ref={desc} placeholder={"What's on your mind, " + user.username + "?"} className="shareInput" />
         </div>
         <hr className="shareHr" />
+        {file && (
+          <div className="shareImgContainer">
+            <img src={URL.createObjectURL(file)} alt="" className="shareImg" />
+            <MdCancel className="shareCancelImg" onClick={() => setFile(null)} />
+          </div>
+        )}
         <form className="shareBottom" onSubmit={(e) => submitHandler(e)}>
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
@@ -63,7 +68,6 @@ const Share = () => {
                 // value={file?.name}
                 accept=".png,.jpeg,.jpg"
                 onChange={(e) => {
-                  debugger;
                   setFile(e.target.files[0]);
                 }}
               />

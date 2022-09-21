@@ -40,7 +40,7 @@ const Topbar = () => {
             <span className="topbarIconBadge">2</span>
           </div>
         </div>
-        <Link to={`profile/${user.username}`}>
+        <Link to={`/profile/${user.username}`}>
           <img
             src={user.profilePicture !== "" ? user.profilePicture : `https://via.placeholder.com/25/4e3fd3/ffffff?text=${user.username}`}
             alt=""

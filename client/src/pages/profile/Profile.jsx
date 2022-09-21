@@ -47,7 +47,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed username={params.username} />
+            <Feed username={params.username} profile />
             <Rightbar user={user} />
           </div>
         </div>

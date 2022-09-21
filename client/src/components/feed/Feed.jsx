@@ -5,7 +5,7 @@ import Share from "../share/Share";
 import "./feed.css";
 import { AuthContext } from "../../context/AuthContext";
 
-const Feed = ({ username }) => {
+const Feed = ({ username, profile }) => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
 
@@ -29,7 +29,8 @@ const Feed = ({ username }) => {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <Share />
+        {username === user.username && <Share />}
+        {!profile && <Share />}
         {posts.map((p) => (
           <Post key={p._id} post={p} />
         ))}

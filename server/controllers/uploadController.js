@@ -9,7 +9,7 @@ exports.test = async (req, res, next) => {
                 file: req.file.buffer.toString('base64'),
                 // fileName: req.body.name,
                 fileName: req.file.originalname,
-                folder: 'test',
+                folder: 'posts',
                 useUniqueFileName: false
             }, function (err, response) {
                 if (err) {

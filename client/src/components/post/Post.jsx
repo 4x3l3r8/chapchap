@@ -6,6 +6,8 @@ import axios from "axios";
 import moment from "moment";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import Like from "./like.png"
+import Heart from "./heart.png"
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
@@ -49,9 +51,9 @@ const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`profile/${owner.username}`}>
+            <Link to={`/profile/${owner.username}`}>
               <img
-                src={owner.profilePicture !== "" ? owner.profilePicture : `https://via.placeholder.com/25/4e3fd3/ffffff?text=${owner.username}`}
+                src={owner.profilePicture !== "" ? owner.profilePicture : `https://via.placeholder.com/750/4e3fd3/ffffff?text=${owner.username}`}
                 className="postProfileImg"
                 alt=""
               />
@@ -69,8 +71,8 @@ const Post = ({ post }) => {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <img className="likeIcon" src="assets/like.png" alt="" onClick={likeHandler} />
-            <img className="likeIcon" src="assets/heart.png" alt="" onClick={likeHandler} />
+            <img className="likeIcon" src={Heart} alt="" onClick={likeHandler} />
+            <img className="likeIcon" src={Like} alt="" onClick={likeHandler} />
             <span className="postLikeCounter">{like} people like it</span>
           </div>
           <div className="postBottomRight">

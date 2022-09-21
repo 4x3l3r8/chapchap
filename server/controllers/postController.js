@@ -11,7 +11,7 @@ exports.createPost = async (req, res, next) => {
         file: req.file.buffer.toString('base64'),
         // fileName: req.body.name,
         fileName: req.file.originalname,
-        folder: 'test',
+        folder: 'post',
         useUniqueFileName: false
       }, async function (err, response) {
         if (err) {

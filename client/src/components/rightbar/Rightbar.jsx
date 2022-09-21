@@ -1,13 +1,64 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { AiOutlineUserAdd, AiOutlineUserDelete } from "react-icons/ai";
+import { BsGenderAmbiguous } from "react-icons/bs";
+import { ImHome2, ImLocation } from "react-icons/im";
+import { RiUserHeartFill } from "react-icons/ri";
+import { AuthContext } from "../../context/AuthContext";
 import { Users } from "../../dummyData";
 import FollowingFriends from "./FollowingFriends";
 import FriendsRow from "./OnlineFriendsRow";
-import { ImLocation, ImHome2 } from "react-icons/im";
-import { RiUserHeartFill } from "react-icons/ri";
-import { BsGenderAmbiguous } from "react-icons/bs";
 import "./rightbar.css";
 
 const Rightbar = ({ user }) => {
-  const onlineUsers = Users.filter((u) => u.username.includes("e"));
+  // const onlineUsers = Users.filter((u) => u.username.includes("e"));
+  const [onlineUsers, setOnlineUsers] = useState(Users.filter((u) => u.username.includes("e")));
+  const [userFollowing, setUserFollowing] = useState([]);
+
+  const { user: loggedInUser, dispatch } = useContext(AuthContext);
+  const [followed, setFollowed] = useState(loggedInUser.following.includes(user?._id));
+
+  useEffect(() => {
+    if (user && Object.keys(user).length !== 0) {
+      try {
+        const fetchFollowing = async () => {
+          let baseUrl = process.env.REACT_APP_API_URL;
+          return axios.get(baseUrl + `users/${user._id}/following`);
+        };
+
+        fetchFollowing().then((res) => setUserFollowing(res.data.data));
+      } catch (e) {
+        alert("An error occurred");
+        console.log(e);
+      }
+    }
+  }, [user]);
+
+  const followUser = async () => {
+    try {
+      let baseUrl = process.env.REACT_APP_API_URL;
+      await axios.put(baseUrl + `users/${user._id}/follow`, { userId: loggedInUser._id }).then((res) => {
+        setFollowed(true);
+        dispatch({ type: "FOLLOW ", payload: user._id });
+      });
+    } catch (error) {
+      alert("error");
+      console.log(error);
+    }
+  };
+
+  const unfollowUser = async () => {
+    try {
+      let baseUrl = process.env.REACT_APP_API_URL;
+      await axios.put(baseUrl + `users/${user._id}/unfollow`, { userId: loggedInUser._id }).then((res) => {
+        setFollowed(false);
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      });
+    } catch (error) {
+      alert("error");
+      console.log(error);
+    }
+  };
 
   const HomeRightbar = () => {
     return (
@@ -34,6 +85,12 @@ const Rightbar = ({ user }) => {
   const ProfileRightbar = () => {
     return (
       <>
+        {user.username !== loggedInUser.username && (
+          <button className={followed ? "rightbarUnfollowButton" : "rightbarFollowButton"} onClick={followed ? unfollowUser : followUser}>
+            {followed ? "Unfollow" : "Follow"}
+            {followed ? <AiOutlineUserDelete /> : <AiOutlineUserAdd />}
+          </button>
+        )}
         <h4 className="rightbarTitle" id="profile">
           User Information
         </h4>
@@ -67,8 +124,8 @@ const Rightbar = ({ user }) => {
           User Friends
         </h4>
         <div className="rightbarFollowings">
-          {Users.map((u) => {
-            return <FollowingFriends key={u.id} user={u} />;
+          {userFollowing.map((u) => {
+            return <FollowingFriends key={u._id} user={u} />;
           })}
         </div>
       </>
