@@ -22,7 +22,7 @@ const Messenger = () => {
 
   useEffect(() => {
     // init socket-client conn
-    socketRef.current = io("ws://localhost:8800");
+    socketRef.current = io(process.env.REACT_APP_WS_URL);
     socketRef.current.on("connect", () => {
       console.log("connected to server");
     });
