@@ -32,14 +32,13 @@ const Register = () => {
   };
 
   useEffect(() => {
+    // dispatch({ type: "RESTING_STATE" });
     email.current.focus();
     return () => {
       dispatch({ type: "RESTING_STATE" });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(user, isFetching, error);
 
   return (
     <div className="login">
@@ -50,7 +49,7 @@ const Register = () => {
         </div>
         <div className="loginRight">
           <form onSubmit={(e) => handleSubmit(e)} className="registerBox" autoComplete="false">
-            {error && <div className="loginError">{error || error.Message}</div>}
+            {error && <div className="loginError">{error.Message || error}</div>}
             <input placeholder="Username" autoComplete={"off"} ref={username} id="username" className="loginInput" />
             <input placeholder="Email" ref={email} className="loginInput" />
             <input type="password" ref={pass1} placeholder="Password" id="password" className="loginInput" />

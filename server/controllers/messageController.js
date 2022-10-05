@@ -4,11 +4,15 @@ const User = require("../models/User");
 // create new message
 exports.newMessage = async (req, res, next) => {
     try {
-        const newMessage = new Message(req.body);
-
+        const { receiverId, ...rest } = req.body;
+        const newMessage = new Message(rest);
         const savedMessage = await newMessage.save();
 
-        req.io.emit("message", savedMessage)
+        // get recipients SocketID from usersList appended in socketUtils.js
+        const recipient = req.io.usersList.find((user) => user.userId === receiverId);
+
+        // this will throw an error if the recipient is currently not connected so skip if not recipient
+        recipient && req.io.to(recipient.socketId).emit("message", savedMessage)
 
         return res.status(200).json(savedMessage);
     } catch (error) {

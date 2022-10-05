@@ -5,6 +5,9 @@ const conversationController = require('../controllers/conversationController');
 router.post('/', conversationController.newConversation);
 
 // get convo
-router.get('/get/:userId', conversationController.getConversation);
+router.get('/get/:userId', conversationController.getUserConversationByUserId);
+
+
+router.post('/getConvo/:userId', conversationController.getConversationByParticipantsId);
 
 module.exports = router;

@@ -7,6 +7,10 @@
   display: flex;
   margin-top: 20px;
 }
+.messageTop.own{
+  flex-direction: row-reverse;
+  /* margin: 0; */
+}
 
 .messageImg {
   width: 32px;
@@ -14,6 +18,10 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 10px;
+}
+.messageImg.own{
+  margin-left: 10px;
+  margin-right: auto;
 }
 
 .messageText {

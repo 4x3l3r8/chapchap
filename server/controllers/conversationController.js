@@ -16,15 +16,29 @@ exports.newConversation = async (req, res, next) => {
     }
 }
 
-// Get user conversation
-exports.getConversation = async (req, res, next) => {
+// Get user all conversations by ID
+exports.getUserConversationByUserId = async (req, res, next) => {
     try {
         const conversation = await Conversation.find({
             members: { $in: [req.params.userId] }
         })
 
         return res.status(200).json({ Status: "Ok", data: conversation })
-    } catch (error) {
+    } catch (e) {
+        console.log(e)
+        next()
+        return res.status(500).json({ message: "An error occurred" })
+    }
+}
+
+exports.getConversationByParticipantsId = async (req, res, next) => {
+    try {
+        const conversation = await Conversation.findOne({
+            members: { $all: [req.params.userId, req.body.userId] }
+        })
+
+        return res.status(200).json({ Status: "Ok", data: conversation })
+    } catch (e) {
         console.log(e)
         next()
         return res.status(500).json({ message: "An error occurred" })
