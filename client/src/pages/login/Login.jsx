@@ -33,8 +33,8 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      email.current.value = "";
-      password.current.value = "";
+      setEmail("");
+      setPassword("");
       navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
