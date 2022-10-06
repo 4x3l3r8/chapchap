@@ -1,6 +1,12 @@
-# ChapChap Social app
+> # ChapChap Social app
 
 This project was built on MERN stack
+
+## How to run locally
+
+`Requirements: Node@v16, NPM@v8`
+
+Clone the project locally to your system. Open the cloned folder in your code editor of choice and run `npm install` to install the project dependencies.
 
 ## Available Scripts
 
@@ -31,3 +37,15 @@ You may also see any lint errors in the console.
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
+<br>
+<br>
+<p style="text-align: center">=======================================================</p>
+<br>
+<br>
+
+> ## Future Features
+
+- Real-time Notifications
+- Email authentication
+- Location posting

@@ -32,8 +32,10 @@ const Topbar = () => {
             <span className="topbarIconBadge">1</span>
           </div>
           <div className="topbarIconItem">
-            <MdChat className="topbarIcon" />
-            <span className="topbarIconBadge">4</span>
+            <Link to={"/messenger"} style={{ textDecoration: "none", color: "white" }}>
+              <MdChat className="topbarIcon" />
+              <span className="topbarIconBadge">4</span>
+            </Link>
           </div>
           <div className="topbarIconItem">
             <MdNotifications className="topbarIcon" />

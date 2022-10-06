@@ -10,8 +10,8 @@ exports.updateUser = async (req, res, next) => {
                 const salt = await bcrypt.genSalt(12);
                 req.body.password = await bcrypt.hash(req.body.password, salt);
             } catch (e) {
-                return res.status(500).send("An error occurred!")
                 next(e)
+                return res.status(500).send("An error occurred!")
             }
         }
         try {
@@ -25,6 +25,22 @@ exports.updateUser = async (req, res, next) => {
         }
     } else {
         return res.status(403).json({ "Status": "Unauthorized", "Message": "You can't make changes to this account." })
+    }
+}
+
+// gets all users
+exports.getAllUsers = async (req, res, next) => {
+    try {
+        const allUsers = await User.find({});
+        const returnData = allUsers.map((user) => {
+            const { updatedAt, createdAt, password, following, followers, ...others } = user._doc;
+            return others
+        })
+        return res.status(200).json({ "Status": "ok", "data": returnData });
+    } catch (e) {
+        next(e);
+        console.log(e)
+        return res.status(500).json({ "Status": "error", "Message": "Server Error" })
     }
 }
 

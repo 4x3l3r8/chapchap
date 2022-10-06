@@ -2,8 +2,21 @@ import "./sidebar.css";
 import { MdRssFeed, MdChat, MdPlayArrow, MdGroups, MdOutlineBookmark, MdHelpOutline, MdWorkOutline, MdOutlineEvent, MdSchool } from "react-icons/md";
 import FriendsRow from "./FriendsRow";
 import { Users } from "../../dummyData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Sidebar = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsersToFollow = () => {
+      let baseUrl = process.env.REACT_APP_API_URL;
+      return axios.get(baseUrl + `users/getAll`);
+    };
+
+    fetchUsersToFollow().then((res) => setUsers(res.data.data));
+  }, []);
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -48,8 +61,11 @@ const Sidebar = () => {
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <FriendsRow key={u.id} user={u} />
+          <h4 className="rightbarTitle" id="home">
+            People You can follow
+          </h4>
+          {users.map((u) => (
+            <FriendsRow key={u._id} user={u} />
           ))}
         </ul>
       </div>
