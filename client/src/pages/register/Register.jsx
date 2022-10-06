@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RegisterCall } from "../../apiCalls";
 import {
@@ -12,7 +12,7 @@ import {
   LoginWrapper,
   Logo,
   RegisterButton,
-  RightSplit,
+  RightSplit
 } from "../../components/AuthComponents";
 import Spinner from "../../components/spinner";
 import { AuthContext } from "../../context/AuthContext";

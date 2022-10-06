@@ -1,7 +1,6 @@
 import "./sidebar.css";
 import { MdRssFeed, MdChat, MdPlayArrow, MdGroups, MdOutlineBookmark, MdHelpOutline, MdWorkOutline, MdOutlineEvent, MdSchool } from "react-icons/md";
 import FriendsRow from "./FriendsRow";
-import { Users } from "../../dummyData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
