@@ -3,7 +3,11 @@ const { Server } = require("socket.io");
 exports.sio = server => {
     return new Server(server, {
         cors: {
-            origin: process.env.CLIENT_URL
+            origin: "*",
+            methods: ["GET", "POST"],
+            allowedHeaders: ["content-type"],
+            pingTimeout: 7000,
+            pingInterval: 3000
         }
     })
 };
